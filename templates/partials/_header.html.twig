@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand" href="/">TodoList</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,9 +6,12 @@
     </button>
 
     <div>
-        <button type="button" class="btn btn-success">Connexion</button>
-        <button type="button" class="btn btn-info">Inscription</button>
-        <button type="button" class="btn btn-danger">Deconnexion</button>
+      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a href="/logout" class="btn btn-danger" role="button">Deconnexion</a>
+      {% else %}
+        <a href="/login" class="btn btn-success" role="button">Connexion</a>
+        <a href="/register" class="btn btn-info" role="button">Inscription</a>
+      {% endif %}
     </div>
   </div>
 </nav>

@@ -5,13 +5,35 @@
 {% block body %}
 
 
-<div class="container">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<main class="container mt-5">
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <h1>Hello {{ app.user.username }}! ✅</h1>
+    {% else %}
+    <h1>Hello ! ✅</h1>
+    {% endif %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/SYMFONY/todo-list/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/SYMFONY/todo-list/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <h4></h4>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Limit date</th>
+            <th scope="col">User</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.name }}</td>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.date|date('d/m/Y') }}</td>
+                    {# <td>{{ users[task.userid -1].username }}</td> #}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
 {% endblock %}
