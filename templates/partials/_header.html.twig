@@ -1,13 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand" href="/">TodoList</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
     <div>
       {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <a href="/logout" class="btn btn-danger" role="button">Deconnexion</a>
+        <img class="img-fluid ms-4" style="max-height : 50px;max-width : 50px;" src="{{ asset('uploads/avatar/' ~ app.user.avatar) }}" alt="Avatar">
       {% else %}
         <a href="/login" class="btn btn-success" role="button">Connexion</a>
         <a href="/register" class="btn btn-info" role="button">Inscription</a>

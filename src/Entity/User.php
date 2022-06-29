@@ -34,6 +34,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Task::class)]
     private $tasks;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $avatar;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -146,6 +149,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $task->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar): self
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

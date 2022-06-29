@@ -25,8 +25,7 @@ class TaskType extends AbstractType
                 // 'attr' => [
                 //     "value" => new \DateTimeImmutable(),
                 // ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
