@@ -29,7 +29,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('plainPassword',RepeatedType::class, [
+            ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
                 'options' => ['attr' => ['class' => 'password-field']],
@@ -53,8 +53,7 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Your password should be at least 6 characters,  contain a lower case letter, an upper case letter and a number.',
                     ])
                 ],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +29,11 @@ class Task
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
+
+    public function __construct($user)
+    {
+        $this->user = $user;
+    }
 
     public function getId(): ?int
     {
