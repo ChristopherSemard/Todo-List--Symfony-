@@ -44,9 +44,8 @@ class GoogleAuthenticator extends OAuth2Authenticator
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
                 /** @var googleUser $googleUser */
                 $googleUser = $client->fetchUserFromToken($accessToken);
-
                 $email = $googleUser->getEmail();
-
+                dd($googleUser);
                 // 1) have they logged in with google before? Easy!
                 $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['googleId' => $googleUser->getId()]);
 
@@ -59,7 +58,7 @@ class GoogleAuthenticator extends OAuth2Authenticator
 
                 // 3) Maybe you just want to "register" them by creating
                 // a User object
-                $user->setgoogleId($googleUser->getId());
+                $user->setId($googleUser->getId());
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
 

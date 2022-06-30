@@ -16,6 +16,7 @@ security:
             security: false
         main:
             lazy: true
+            entry_point: App\Security\LoginFormAuthenticator
             custom_authenticators:
                 - App\Security\LoginFormAuthenticator
                 - App\Security\GoogleAuthenticator

@@ -10,7 +10,7 @@ knpu_oauth2_client:
             client_id: "%env(OAUTH_GOOGLE_CLIENT_ID)%"
             client_secret: "%env(OAUTH_GOOGLE_CLIENT_SECRET)%"
             # a route name you'll create
-            redirect_route: app_google/connect
+            redirect_route: app_google/connect/check
             redirect_params: {}
         github:
             # must be "github" - it activates that type!
@@ -19,5 +19,5 @@ knpu_oauth2_client:
             client_id: "%env(OAUTH_GITHUB_CLIENT_ID)%"
             client_secret: "%env(OAUTH_GITHUB_CLIENT_SECRET)%"
             # a route name you'll create
-            redirect_route: app_github/connect
+            redirect_route: app_github/connect/check
             redirect_params: {}

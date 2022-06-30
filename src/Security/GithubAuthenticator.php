@@ -3,9 +3,11 @@
 namespace App\Security;
 
 use App\Entity\User; // your user entity
+use App\Security\Exception\NotVerifiedEmailException;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
+use League\OAuth2\Client\Provider\GithubResourceOwner;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,18 +17,24 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\Security\Core\Security;
+
 
 class GithubAuthenticator extends OAuth2Authenticator
 {
     private $clientRegistry;
     private $entityManager;
     private $router;
+    private $client;
 
-    public function __construct(ClientRegistry $clientRegistry, EntityManagerInterface $entityManager, RouterInterface $router)
+    public function __construct(HttpClientInterface $client, ClientRegistry $clientRegistry, EntityManagerInterface $entityManager, RouterInterface $router)
     {
         $this->clientRegistry = $clientRegistry;
         $this->entityManager = $entityManager;
         $this->router = $router;
+        $this->client = $client;
     }
 
     public function supports(Request $request): ?bool
@@ -44,8 +52,29 @@ class GithubAuthenticator extends OAuth2Authenticator
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
                 /** @var githubUser $githubUser */
                 $githubUser = $client->fetchUserFromToken($accessToken);
-
-                $email = $githubUser->getEmail();
+                // dd($accessToken->getToken());
+                // Récupérer l'email pour GITHUB
+                $response = $this->client->request(
+                    'GET',
+                    'https://api.github.com/user/emails',
+                    [
+                        'headers' => [
+                            'Accept' => 'application/vnd.github.v3+json',
+                            'Authorization' => "token {$accessToken->getToken()}",
+                        ]
+                    ]
+                );
+                $emails = json_decode($response->getContent(), true);
+                foreach ($emails as $key => $email) {
+                    if ($email['primary'] == true && $email['verified'] == true) {
+                        $data = $githubUser->toArray();
+                        $data['email'] = $email['email'];
+                        $githubUser = new GithubResourceOwner($data);
+                    }
+                }
+                if ($githubUser->getEmail() == null) {
+                    throw new NotVerifiedEmailException();
+                }
 
                 // 1) have they logged in with github before? Easy!
                 $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['githubId' => $githubUser->getId()]);
@@ -57,9 +86,11 @@ class GithubAuthenticator extends OAuth2Authenticator
                 // 2) do we have a matching user by email?
                 $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
 
+                dd($user);
                 // 3) Maybe you just want to "register" them by creating
                 // a User object
-                $user->setgithubId($githubUser->getId());
+                $user->setEmail($githubUser->getEmail());
+                dd($user);
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
 
@@ -81,8 +112,13 @@ class GithubAuthenticator extends OAuth2Authenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
-        $message = strtr($exception->getMessageKey(), $exception->getMessageData());
+        if ($request->hasSession()) {
+            $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+        }
 
-        return new Response($message, Response::HTTP_FORBIDDEN);
+
+        $targetUrl = $this->router->generate('app_login');
+
+        return new RedirectResponse($targetUrl);
     }
 }
