@@ -4,7 +4,7 @@
 
 {% block body %}
     <main class="container mt-5 col-lg-4">
-        <h1>Register</h1>
+        <h1>{% trans from 'messages' %}register.title{% endtrans %}</h1>
 
         {{ form_start(registrationForm) }}
             {{ form_row(registrationForm.email) }}

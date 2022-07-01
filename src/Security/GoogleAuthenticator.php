@@ -16,6 +16,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use App\Security\Exception\EmailAlreadyUsedException;
+use Symfony\Component\Security\Core\Security;
 
 class GoogleAuthenticator extends OAuth2Authenticator
 {
@@ -86,10 +87,16 @@ class GoogleAuthenticator extends OAuth2Authenticator
         //return null;
     }
 
+
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
-        $message = strtr($exception->getMessageKey(), $exception->getMessageData());
+        if ($request->hasSession()) {
+            $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+        }
 
-        return new Response($message, Response::HTTP_FORBIDDEN);
+
+        $targetUrl = $this->router->generate('app_login');
+
+        return new RedirectResponse($targetUrl);
     }
 }
