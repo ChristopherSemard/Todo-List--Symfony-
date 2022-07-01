@@ -38,7 +38,7 @@ class RegistrationController extends AbstractController
                 $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename =  $safeFilename . '-' . uniqid() . '.' . $avatarFile->guessExtension();
+                $newFilename = './uploads/avatar/' . $safeFilename . '-' . uniqid() . '.' . $avatarFile->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
@@ -64,7 +64,7 @@ class RegistrationController extends AbstractController
                 "Your account has been created !"
             );
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [

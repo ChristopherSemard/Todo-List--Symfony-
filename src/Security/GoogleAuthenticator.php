@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
+use App\Security\Exception\EmailAlreadyUsedException;
 
 class GoogleAuthenticator extends OAuth2Authenticator
 {
@@ -45,22 +46,29 @@ class GoogleAuthenticator extends OAuth2Authenticator
                 /** @var googleUser $googleUser */
                 $googleUser = $client->fetchUserFromToken($accessToken);
                 $email = $googleUser->getEmail();
-                dd($googleUser);
+
+                $arrayGoogleUser = $googleUser->toArray();
                 // 1) have they logged in with google before? Easy!
                 $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['googleId' => $googleUser->getId()]);
-
                 if ($existingUser) {
                     return $existingUser;
                 }
 
                 // 2) do we have a matching user by email?
                 $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
-
-                // 3) Maybe you just want to "register" them by creating
-                // a User object
-                $user->setId($googleUser->getId());
-                $this->entityManager->persist($user);
-                $this->entityManager->flush();
+                if ($user) {
+                    throw new EmailAlreadyUsedException();
+                } else {
+                    $user = new User();
+                    // 3) Maybe you just want to "register" them by creating
+                    // a User object
+                    $user->setEmail($arrayGoogleUser['email']);
+                    $user->setUsername($arrayGoogleUser['name']);
+                    $user->setAvatar($arrayGoogleUser['picture']);
+                    $user->setGoogleId($arrayGoogleUser['sub']);
+                    $this->entityManager->persist($user);
+                    $this->entityManager->flush();
+                }
 
                 return $user;
             })

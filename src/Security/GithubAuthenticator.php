@@ -4,6 +4,7 @@ namespace App\Security;
 
 use App\Entity\User; // your user entity
 use App\Security\Exception\NotVerifiedEmailException;
+use App\Security\Exception\EmailAlreadyUsedException;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
@@ -76,23 +77,30 @@ class GithubAuthenticator extends OAuth2Authenticator
                     throw new NotVerifiedEmailException();
                 }
 
+                $arrayGithubUser = $githubUser->toArray();
+                $email = $arrayGithubUser['email'];
+
                 // 1) have they logged in with github before? Easy!
                 $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['githubId' => $githubUser->getId()]);
-
                 if ($existingUser) {
                     return $existingUser;
                 }
 
                 // 2) do we have a matching user by email?
                 $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
-
-                dd($user);
-                // 3) Maybe you just want to "register" them by creating
-                // a User object
-                $user->setEmail($githubUser->getEmail());
-                dd($user);
-                $this->entityManager->persist($user);
-                $this->entityManager->flush();
+                if ($user) {
+                    throw new EmailAlreadyUsedException();
+                } else {
+                    $user = new User();
+                    // 3) Maybe you just want to "register" them by creating
+                    // a User object
+                    $user->setEmail($arrayGithubUser['email']);
+                    $user->setUsername($arrayGithubUser['login']);
+                    $user->setAvatar($arrayGithubUser['avatar_url']);
+                    $user->setGithubId($arrayGithubUser['id']);
+                    $this->entityManager->persist($user);
+                    $this->entityManager->flush();
+                }
 
                 return $user;
             })
