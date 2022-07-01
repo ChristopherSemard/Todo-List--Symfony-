@@ -1,0 +1,26 @@
+button:
+    signin: Connexion
+    signup: Inscription
+    signout: Deconnexion
+    addtask: Ajouter une tâche
+    edit: Editer
+    delete: Supprimer
+    register: S'inscrire
+
+table:
+    tasklist: Liste des tâches
+    name: Tâche
+    description: Description
+    limitdate: Date limite
+    username: Utilisateur
+    edit: Editer
+    delete: Supprimer
+
+register:
+    title: Inscription
+    email: Email
+    username: Nom d'utilisateur
+    avatar: Photo de profil
+    password: Mot de passe
+    repeatpassword: Confirmation mot de passe
+    agreeterms: J'accepte les termes

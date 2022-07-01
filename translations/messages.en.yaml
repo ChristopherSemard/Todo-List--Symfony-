@@ -1,0 +1,26 @@
+button:
+    signin: Sign in
+    signup: Sign up
+    signout: Sign out
+    addtask: Add a task
+    edit: Edit
+    delete: Delete
+    register: Register
+
+table:
+    tasklist: Tasks list
+    name: Task
+    description: Description
+    limitdate: Limit date
+    username: Username
+    edit: Edit
+    delete: Delete
+
+register:
+    title: Register
+    email: Email
+    username: Username
+    avatar: Avatar
+    password: Password
+    repeatpassword: Repeat Password
+    agreeterms: Agree Terms

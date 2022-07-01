@@ -7,6 +7,7 @@
         "php": ">=8.0.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/annotations": "^1.13",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.12",
@@ -26,6 +27,7 @@
         "symfony/proxy-manager-bridge": "6.0.*",
         "symfony/runtime": "6.0.*",
         "symfony/security-bundle": "6.0.*",
+        "symfony/translation": "6.0.*",
         "symfony/twig-bundle": "6.0.*",
         "symfony/validator": "6.0.*",
         "symfony/yaml": "6.0.*",
@@ -83,5 +85,9 @@
             "allow-contrib": false,
             "require": "6.0.*"
         }
+    },
+    "require-dev": {
+        "symfony/stopwatch": "6.0.*",
+        "symfony/web-profiler-bundle": "6.0.*"
     }
 }

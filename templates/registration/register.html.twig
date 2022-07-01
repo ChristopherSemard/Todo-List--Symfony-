@@ -13,7 +13,7 @@
             {{ form_row(registrationForm.plainPassword) }}
             {{ form_row(registrationForm.agreeTerms) }}
 
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary">{% trans from 'messages' %}button.register{% endtrans %}</button>
         {{ form_end(registrationForm) }}
     </main>
 {% endblock %}

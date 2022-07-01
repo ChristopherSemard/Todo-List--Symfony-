@@ -10,8 +10,8 @@ use App\Repository\TaskRepository;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
-    public function index(TaskRepository $taskRrepository, UserRepository $userRrepository ): Response
+    #[Route("/", name: 'app_home')]
+    public function index(TaskRepository $taskRrepository, UserRepository $userRrepository): Response
     {
         $tasks = $taskRrepository->findAll();
         return $this->render('home/index.html.twig', [

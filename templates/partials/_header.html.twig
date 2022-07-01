@@ -4,11 +4,11 @@
 
     <div>
       {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <a href="/logout" class="btn btn-danger" role="button">Logout</a>
+        <a href="/logout" class="btn btn-danger" role="button">{% trans from 'messages' %}button.signout{% endtrans %}</a>
         <img class="img-fluid ms-4" style="max-height : 50px;max-width : 50px;" src="{{ asset( app.user.avatar) }}" alt="Avatar">
       {% else %}
-        <a href="/login" class="btn btn-success" role="button">Sign in</a>
-        <a href="/register" class="btn btn-info" role="button">Sign up</a>
+        <a href="/login" class="btn btn-success" role="button">{% trans from 'messages' %}button.signin{% endtrans %}</a>
+        <a href="/register" class="btn btn-info" role="button">{% trans from 'messages' %}button.signup{% endtrans %}</a>
       {% endif %}
     </div>
   </div>

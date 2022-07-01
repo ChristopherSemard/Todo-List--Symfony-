@@ -8,6 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -16,15 +18,25 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+
 class RegistrationFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('username')
+            ->add(
+                'email',
+                EmailType::class,
+                ['label' => 'register.email']
+            )
+            ->add(
+                'username',
+                TextType::class,
+                ['label' => 'register.username']
+            )
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'label' => 'register.agreeterms',
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
@@ -35,8 +47,8 @@ class RegistrationFormType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
                 'options' => ['attr' => ['class' => 'password-field']],
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options'  => ['label' => 'register.password'],
+                'second_options' => ['label' => 'register.repeatpassword'],
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
