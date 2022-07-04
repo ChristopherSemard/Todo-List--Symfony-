@@ -1,19 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Register
+{% endblock %}
 
 {% block body %}
-    <main class="container mt-5 col-lg-4">
-        <h1>{% trans from 'messages' %}register.title{% endtrans %}</h1>
+	<main class="container mt-5 col-lg-4">
+		<h1>{% trans from 'messages' %}register.title{% endtrans %}</h1>
 
-        {{ form_start(registrationForm) }}
-            {{ form_row(registrationForm.email) }}
-            {{ form_row(registrationForm.username) }}
-            {{ form_row(registrationForm.avatar) }}
-            {{ form_row(registrationForm.plainPassword) }}
-            {{ form_row(registrationForm.agreeTerms) }}
+		{{ form_start(registrationForm) }}
+		{{ form_row(registrationForm.email) }}
+		{{ form_row(registrationForm.username) }}
+		{{ form_row(registrationForm.avatar) }}
+		{{ form_row(registrationForm.plainPassword) }}
+		{{ form_row(registrationForm.agreeTerms) }}
 
-            <button type="submit" class="btn btn-primary">{% trans from 'messages' %}button.register{% endtrans %}</button>
-        {{ form_end(registrationForm) }}
-    </main>
+		<button type="submit" class="btn btn-primary">{% trans from 'messages' %}button.register{% endtrans %}</button>
+		{{ form_end(registrationForm) }}
+
+
+		<div class='mt-2 d-flex flex-column gap-2'>
+			<a class="btn btn-light" href="/google/connect" role="button" style="text-transform:none">
+				<img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
+				Sign up with Google
+			</a>
+			<a class="btn btn-light" href="/github/connect" role="button" style="text-transform:none">
+				<img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"/>
+				Sign up with Github
+			</a>
+		</div>
+	</main>
 {% endblock %}
