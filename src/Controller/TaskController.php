@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class TaskController extends AbstractController
 {
     #[Route('/{_locale<%app.supported_locales%>}/task/new', name: 'app_task/new')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,  string $_locale): Response
     {
         $user = $this->getUser();
         $task = new Task($user);
@@ -32,7 +32,7 @@ class TaskController extends AbstractController
                 'success',
                 "Your task has been created !"
             );
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home', ['_locale' => $_locale]);
         }
 
         return $this->render('task/new.html.twig', [
@@ -43,7 +43,7 @@ class TaskController extends AbstractController
 
 
     #[Route('/{_locale<%app.supported_locales%>}/task/edit/{id}', name: 'app_task/edit')]
-    public function edit(Request $request, EntityManagerInterface $entityManager, TaskRepository $repository, int $id): Response
+    public function edit(Request $request, EntityManagerInterface $entityManager, TaskRepository $repository, int $id,  string $_locale): Response
     {
         $task = $repository->findOneBy(['id' => $id]);
         $form = $this->createForm(TaskType::class, $task);
@@ -60,7 +60,7 @@ class TaskController extends AbstractController
                 'success',
                 "Your task has been edited !"
             );
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home', ['_locale' => $_locale]);
         }
 
         return $this->render('task/edit.html.twig', [
@@ -69,7 +69,7 @@ class TaskController extends AbstractController
         ]);
     }
     #[Route('/{_locale<%app.supported_locales%>}/task/delete/{id}', name: 'app_task/delete')]
-    public function delete(Request $request, EntityManagerInterface $entityManager, TaskRepository $repository, int $id): Response
+    public function delete(Request $request, EntityManagerInterface $entityManager, TaskRepository $repository, int $id,  string $_locale): Response
     {
         $task = $repository->findOneBy(['id' => $id]);
 
@@ -82,6 +82,6 @@ class TaskController extends AbstractController
             "Your task has been deleted !"
         );
 
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_home', ['_locale' => $_locale]);
     }
 }
