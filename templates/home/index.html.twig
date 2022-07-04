@@ -1,56 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TodoList - Accueil{% endblock %}
+{% block title %}TodoList - Accueil
+{% endblock %}
 
 {% block body %}
 
 
-<main class="container mt-5">
+	<main class="container mt-5">
 
 
-{% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-        {{ message }}
-        </div>
-{% endfor %}
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
 
-    <div class="d-flex justify-content-between align-items-center my-3">
-        <h1>{% trans from 'messages' %}table.tasklist{% endtrans %}</h1>
-        
-        <a href="/task/new" class="btn btn-info" role="button">{% trans from 'messages' %}button.addtask{% endtrans %}</a>
-    </div>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-            <th scope="col">{% trans from 'messages' %}table.name{% endtrans %}</th>
-            <th scope="col">{% trans from 'messages' %}table.description{% endtrans %}</th>
-            <th scope="col">{% trans from 'messages' %}table.limitdate{% endtrans %}</th>
-            <th scope="col">{% trans from 'messages' %}table.username{% endtrans %}</th>
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <th scope="col">{% trans from 'messages' %}table.edit{% endtrans %}</th>
-            <th scope="col">{% trans from 'messages' %}table.delete{% endtrans %}</th>
-            {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for task in tasks %}
-                <tr>
-                    <td>{{ task.name }}</td>
-                    <td>{{ task.description }}</td>
-                    <td>{{ task.date|date('d/m/Y') }}</td>
-                    <td>{{ task.user.username }}</td>
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-					<td>
-						<a href="{{ path('app_task/edit', { id: task.id }) }}" class="btn btn-warning">Edit</a>
-					</td>
-					<td>
-						<a href="{{ path('app_task/delete', { id: task.id }) }}" class="btn btn-danger">Delete</a>
-					</td>
-                    {% endif %}
+		<div class="d-flex justify-content-between align-items-center my-3">
+			<h1>{% trans from 'messages' %}table.tasklist{% endtrans %}</h1>
 
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</main>
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				<a href="/task/new" class="btn btn-info" role="button">{% trans from 'messages' %}button.addtask{% endtrans %}</a>
+			{% endif %}
+		</div>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">{% trans from 'messages' %}table.name{% endtrans %}</th>
+					<th scope="col">{% trans from 'messages' %}table.description{% endtrans %}</th>
+					<th scope="col">{% trans from 'messages' %}table.limitdate{% endtrans %}</th>
+					<th scope="col">{% trans from 'messages' %}table.username{% endtrans %}</th>
+					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+						<th scope="col">{% trans from 'messages' %}table.edit{% endtrans %}</th>
+						<th scope="col">{% trans from 'messages' %}table.delete{% endtrans %}</th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for task in tasks %}
+					<tr>
+						<td>{{ task.name }}</td>
+						<td>{{ task.description }}</td>
+						<td>{{ task.date|date('d/m/Y') }}</td>
+						<td>{{ task.user.username }}</td>
+						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+							<td>
+								<a href="{{ path('app_task/edit', { id: task.id }) }}" class="btn btn-warning">Edit</a>
+							</td>
+							<td>
+								<a href="{{ path('app_task/delete', { id: task.id }) }}" class="btn btn-danger">Delete</a>
+							</td>
+						{% endif %}
+
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</main>
 {% endblock %}
