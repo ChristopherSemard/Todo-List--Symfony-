@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class TaskController extends AbstractController
 {
-    #[Route('/task/new', name: 'app_task/new')]
+    #[Route('/{_locale<%app.supported_locales%>}/task/new', name: 'app_task/new')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
@@ -42,7 +42,7 @@ class TaskController extends AbstractController
     }
 
 
-    #[Route('/task/edit/{id}', name: 'app_task/edit')]
+    #[Route('/{_locale<%app.supported_locales%>}/task/edit/{id}', name: 'app_task/edit')]
     public function edit(Request $request, EntityManagerInterface $entityManager, TaskRepository $repository, int $id): Response
     {
         $task = $repository->findOneBy(['id' => $id]);
@@ -68,7 +68,7 @@ class TaskController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-    #[Route('/task/delete/{id}', name: 'app_task/delete')]
+    #[Route('/{_locale<%app.supported_locales%>}/task/delete/{id}', name: 'app_task/delete')]
     public function delete(Request $request, EntityManagerInterface $entityManager, TaskRepository $repository, int $id): Response
     {
         $task = $repository->findOneBy(['id' => $id]);

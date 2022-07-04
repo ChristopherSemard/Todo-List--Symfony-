@@ -19,7 +19,7 @@
 			<h1>{% trans from 'messages' %}table.tasklist{% endtrans %}</h1>
 
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-				<a href="/task/new" class="btn btn-info" role="button">{% trans from 'messages' %}button.addtask{% endtrans %}</a>
+				<a href="{{ path('app_task/new', {_locale: app.request.locale}) }}" class="btn btn-info" role="button">{% trans from 'messages' %}button.addtask{% endtrans %}</a>
 			{% endif %}
 		</div>
 		<table class="table table-hover">
@@ -44,10 +44,10 @@
 						<td>{{ task.user.username }}</td>
 						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 							<td>
-								<a href="{{ path('app_task/edit', { id: task.id }) }}" class="btn btn-warning">Edit</a>
+								<a href="{{path('app_task/edit',{_locale:app.request.locale,id:task.id})}}" class="btn btn-warning">Edit</a>
 							</td>
 							<td>
-								<a href="{{ path('app_task/delete', { id: task.id }) }}" class="btn btn-danger">Delete</a>
+								<a href="{{path('app_task/delete',{_locale:app.request.locale,id:task.id})}}" class="btn btn-danger">Delete</a>
 							</td>
 						{% endif %}
 

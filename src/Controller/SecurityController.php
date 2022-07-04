@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/login', name: 'app_login')]
+    #[Route(path: '/{_locale<%app.supported_locales%>}/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils)
     {
         // if ($this->getUser()) {
@@ -26,14 +26,14 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
-    #[Route(path: '/logout', name: 'app_logout')]
+    #[Route(path: '/{_locale<%app.supported_locales%>}/logout', name: 'app_logout')]
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
 
-    #[Route('/github/connect', name: 'app_github/connect')]
+    #[Route('/{_locale<%app.supported_locales%>}/github/connect', name: 'app_github/connect')]
     public function githubConnectAction(ClientRegistry $clientRegistry)
     {
         // on Symfony 3.3 or lower, $clientRegistry = $this->get('knpu.oauth2.registry');
@@ -50,7 +50,7 @@ class SecurityController extends AbstractController
     {
     }
 
-    #[Route('/google/connect', name: 'app_google/connect')]
+    #[Route('/{_locale<%app.supported_locales%>}/google/connect', name: 'app_google/connect')]
     public function googleConnectAction(ClientRegistry $clientRegistry)
     {
         // on Symfony 3.3 or lower, $clientRegistry = $this->get('knpu.oauth2.registry');

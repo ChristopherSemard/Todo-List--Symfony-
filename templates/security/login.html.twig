@@ -1,55 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Log in!
+{% endblock %}
 
 {% block body %}
 
-    <main class="container mt-5 col-lg-4">
-        <form method="post" class="d-flex flex-column gap-2">
-            {% if error %}
-                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
+	<main class="container mt-5 col-lg-4">
+		<form method="post" class="d-flex flex-column gap-2">
+			{% if error %}
+				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			{% endif %}
 
-            {% if app.user %}
-                <div class="mb-3">
-                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-                </div>
-            {% endif %}
+			{% if app.user %}
+				<div class="mb-3">
+					You are logged in as
+					{{ app.user.userIdentifier }},
+					<a href="{{ path('app_logout', {_locale: app.request.locale}) }}">Logout</a>
+				</div>
+			{% endif %}
 
-            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-            <label for="inputEmail">Email</label>
-            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-            <label for="inputPassword">Password</label>
-            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+			<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+			<label for="inputEmail">Email</label>
+			<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+			<label for="inputPassword">Password</label>
+			<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-            <input type="hidden" name="_csrf_token"
-                value="{{ csrf_token('authenticate') }}"
-            >
+			<input
+			type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-            {#
-                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                See https://symfony.com/doc/current/security/remember_me.html
+			{#
+						                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+						                See https://symfony.com/doc/current/security/remember_me.html
+						
+						                <div class="checkbox mb-3">
+						                    <label>
+						                        <input type="checkbox" name="_remember_me"> Remember me
+						                    </label>
+						                </div>
+						            #}
 
-                <div class="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" name="_remember_me"> Remember me
-                    </label>
-                </div>
-            #}
-
-            <button class="btn  btn-primary align-self-end" type="submit">
-                Sign in
-            </button>
-        </form>
-        <div class='mt-2 d-flex flex-column gap-2'>
-            <a class="btn btn-light" href="/google/connect" role="button" style="text-transform:none">
-                <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
-                Sign in with Google
-            </a>
-            <a class="btn btn-light" href="/github/connect" role="button" style="text-transform:none">
-                <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" />
-                Sign in with Github
-            </a>
-        </div>
-    </main>
+			<button class="btn  btn-primary align-self-end" type="submit">
+				Sign in
+			</button>
+		</form>
+		<div class='mt-2 d-flex flex-column gap-2'>
+			<a class="btn btn-light" href="{{ path('app_google/connect', {_locale: app.request.locale}) }}" role="button" style="text-transform:none">
+				<img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
+				Sign in with Google
+			</a>
+			<a class="btn btn-light" href="{{ path('app_github/connect', {_locale: app.request.locale}) }}" role="button" style="text-transform:none">
+				<img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"/>
+				Sign in with Github
+			</a>
+		</div>
+	</main>
 {% endblock %}
