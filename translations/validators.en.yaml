@@ -2,6 +2,7 @@ message:
     password:
         match: The password fields must match.
         required: Please enter a password.
-        validity: Please enter a valid password.
+        validity: Your password should be at least 6 characters,  contain a lower case letter, an upper case letter and a number.
     avatar: Please upload a valid picture. (.png, .jpg, .jpeg, .gif, .webp).
     agreeterms: You must agree our terms.
+    emailused: There is already an account with this email.

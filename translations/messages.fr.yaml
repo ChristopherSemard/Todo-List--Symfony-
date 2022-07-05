@@ -29,3 +29,11 @@ register:
 
 login:
     title: Connexion
+
+flash:
+    account:
+        created: Votre compte a bien été créé.
+    task:
+        created: Votre tâche a été ajoutée !
+        edited: Votre tâche a été modifiée !
+        deleted: Votre tâche a été supprimée !

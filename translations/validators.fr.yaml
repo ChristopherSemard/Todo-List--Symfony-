@@ -2,7 +2,8 @@ message:
     password:
         match: Les mots de passe doivent correspondre.
         required: Merci d'entrer un mot de passe.
-        validity: Merci d'entrer un mot de passe valide.
+        validity: Votre mot de passe doit contenir au moins 6 caractères dont une minuscule, une majuscule et un chiffre.
 
     avatar: Merci d'envoyer une image valide. (.png, .jpg, .jpeg, .gif, .webp).
     agreeterms: Vous devez accepter nos termes.
+    emailused: Il y a déjà un compte existant avec cet email.

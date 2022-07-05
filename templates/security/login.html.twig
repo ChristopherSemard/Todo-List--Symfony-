@@ -7,6 +7,14 @@
 
 	<main class="container mt-5 col-lg-4">
 		<form method="post" class="d-flex flex-column gap-2">
+		
+
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+
 			{% if error %}
 				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 			{% endif %}
@@ -15,7 +23,7 @@
 				<div class="mb-3">
 					You are logged in as
 					{{ app.user.userIdentifier }},
-					<a href="{{ path('app_logout', {_locale: app.request.locale}) }}">{% trans from 'messages' %}button.logout{% endtrans %}</a>
+					<a href="{{ path('app_logout', {_locale: app.request.locale}) }}">{% trans from 'messages' %}button.signout{% endtrans %}</a>
 				</div>
 			{% endif %}
 

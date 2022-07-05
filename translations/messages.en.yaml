@@ -29,3 +29,11 @@ register:
 
 login:
     title: Log in
+
+flash:
+    account:
+        created: Your account has been created.
+    task:
+        created: Your task has been created !
+        edited: Your task has been edited !
+        deleted: Your task has been deleted !

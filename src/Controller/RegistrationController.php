@@ -12,12 +12,12 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/{_locale<%app.supported_locales%>}/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, SluggerInterface $slugger, EntityManagerInterface $entityManager,  string $_locale): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, SluggerInterface $slugger, EntityManagerInterface $entityManager,  string $_locale, TranslatorInterface $translator): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -53,8 +53,7 @@ class RegistrationController extends AbstractController
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $user->setAvatar($newFilename);
-            }
-            else{
+            } else {
                 $user->setAvatar('./uploads/avatar/default.jpg');
             }
 
@@ -64,7 +63,7 @@ class RegistrationController extends AbstractController
 
             $this->addFlash(
                 'success',
-                "Your account has been created !"
+                $translator->trans("flash.account.created")
             );
 
             return $this->redirectToRoute('app_login', ['_locale' => $_locale]);
