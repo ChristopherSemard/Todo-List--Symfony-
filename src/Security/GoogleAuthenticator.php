@@ -79,7 +79,8 @@ class GoogleAuthenticator extends OAuth2Authenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         // change "app_homepage" to some route in your app
-        $targetUrl = $this->router->generate('app_home');
+        $_locale = $request->getLocale();
+        $targetUrl = $this->router->generate('app_home', ['_locale' => $_locale]);
 
         return new RedirectResponse($targetUrl);
 
@@ -95,7 +96,8 @@ class GoogleAuthenticator extends OAuth2Authenticator
         }
 
 
-        $targetUrl = $this->router->generate('app_login');
+        $_locale = $request->getLocale();
+        $targetUrl = $this->router->generate('app_login', ['_locale' => $_locale]);
 
         return new RedirectResponse($targetUrl);
     }

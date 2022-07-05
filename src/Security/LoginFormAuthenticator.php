@@ -50,7 +50,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         //     }
 
         $_locale = $request->getLocale();
-        return new RedirectResponse('/'.$_locale.'/');
+        return new RedirectResponse('/' . $_locale . '/');
         // return $this->redirectToRoute('app_home');
         // For example:
         // return new RedirectResponse($this->urlGenerator->generate('some_route'));
