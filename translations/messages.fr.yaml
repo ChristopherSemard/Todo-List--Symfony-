@@ -6,6 +6,8 @@ button:
     edit: Editer
     delete: Supprimer
     register: S'inscrire
+    registerwith: S'inscrire avec
+    signinwith: Se connecter avec
 
 table:
     tasklist: Liste des tâches
@@ -24,3 +26,6 @@ register:
     password: Mot de passe
     repeatpassword: Confirmation mot de passe
     agreeterms: J'accepte les termes
+
+login:
+    title: Connexion

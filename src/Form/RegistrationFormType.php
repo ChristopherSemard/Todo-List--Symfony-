@@ -39,13 +39,13 @@ class RegistrationFormType extends AbstractType
                 'label' => 'register.agreeterms',
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'message.agreeterms',
                     ]),
                 ],
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'message.password.match',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'first_options'  => ['label' => 'register.password'],
                 'second_options' => ['label' => 'register.repeatpassword'],
@@ -53,18 +53,12 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
+                        'message' => 'message.password.required',
                     ]),
                     new Regex([
                         'pattern' => '/^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/',
                         'match' => true,
-                        'message' => 'Your password should be at least 6 characters,  contain a lower case letter, an upper case letter and a number.',
+                        'message' => 'message.password.validity',
                     ])
                 ],
             ])
@@ -91,7 +85,7 @@ class RegistrationFormType extends AbstractType
                             "image/gif",
                             "image/webp"
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid picture. (.png, .jpg, .jpeg, .gif, .webp)',
+                        'mimeTypesMessage' => 'message.avatar',
                     ])
                 ],
             ]);

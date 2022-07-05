@@ -6,6 +6,8 @@ button:
     edit: Edit
     delete: Delete
     register: Register
+    registerwith: Sign up with
+    signinwith: Sign in with
 
 table:
     tasklist: Tasks list
@@ -24,3 +26,6 @@ register:
     password: Password
     repeatpassword: Repeat Password
     agreeterms: Agree Terms
+
+login:
+    title: Log in

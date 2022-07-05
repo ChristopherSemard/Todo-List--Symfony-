@@ -15,14 +15,14 @@
 				<div class="mb-3">
 					You are logged in as
 					{{ app.user.userIdentifier }},
-					<a href="{{ path('app_logout', {_locale: app.request.locale}) }}">Logout</a>
+					<a href="{{ path('app_logout', {_locale: app.request.locale}) }}">{% trans from 'messages' %}button.logout{% endtrans %}</a>
 				</div>
 			{% endif %}
 
-			<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-			<label for="inputEmail">Email</label>
+			<h1 class="h3 mb-3 font-weight-normal">{% trans from 'messages' %}login.title{% endtrans %}</h1>
+			<label for="inputEmail">{% trans from 'messages' %}register.email{% endtrans %}</label>
 			<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-			<label for="inputPassword">Password</label>
+			<label for="inputPassword">{% trans from 'messages' %}register.password{% endtrans %}</label>
 			<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
 			<input
@@ -40,17 +40,17 @@
 						            #}
 
 			<button class="btn  btn-primary align-self-end" type="submit">
-				Sign in
+				{% trans from 'messages' %}button.signin{% endtrans %}
 			</button>
 		</form>
 		<div class='mt-2 d-flex flex-column gap-2'>
 			<a class="btn btn-light" href="{{ path('app_google/connect', {_locale: app.request.locale}) }}" role="button" style="text-transform:none">
 				<img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
-				Sign in with Google
+				{% trans from 'messages' %}button.signinwith{% endtrans %} Google
 			</a>
 			<a class="btn btn-light" href="{{ path('app_github/connect', {_locale: app.request.locale}) }}" role="button" style="text-transform:none">
 				<img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"/>
-				Sign in with Github
+				{% trans from 'messages' %}button.signinwith{% endtrans %} Github
 			</a>
 		</div>
 	</main>

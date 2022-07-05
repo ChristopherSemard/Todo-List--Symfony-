@@ -1,0 +1,7 @@
+message:
+    password:
+        match: The password fields must match.
+        required: Please enter a password.
+        validity: Please enter a valid password.
+    avatar: Please upload a valid picture. (.png, .jpg, .jpeg, .gif, .webp).
+    agreeterms: You must agree our terms.

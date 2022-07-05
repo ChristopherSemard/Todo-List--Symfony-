@@ -1,0 +1,8 @@
+message:
+    password:
+        match: Les mots de passe doivent correspondre.
+        required: Merci d'entrer un mot de passe.
+        validity: Merci d'entrer un mot de passe valide.
+
+    avatar: Merci d'envoyer une image valide. (.png, .jpg, .jpeg, .gif, .webp).
+    agreeterms: Vous devez accepter nos termes.
