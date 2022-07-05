@@ -22,6 +22,7 @@ class TaskType extends AbstractType
             ->add('date', DateType::class,  [
                 'input' => 'datetime_immutable',
                 'label' => 'Limit date',
+                'data' => new \DateTimeImmutable()
                 // 'attr' => [
                 //     "value" => new \DateTimeImmutable(),
                 // ]
